@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id           Int           @id @default(autoincrement())
+  username     String        @unique
+  passwordHash String
+  role         String        // 'ADMIN', 'COMMANDER', 'LOGISTICS'
+  baseId       Int?
+  base         Base?         @relation(fields: [baseId], references: [id])
+  transactions Transaction[]
+}
+
+model Base {
+  id           Int           @id @default(autoincrement())
+  name         String
+  location     String
+  users        User[]
+  transactionsFrom Transaction[] @relation("FromBase")
+  transactionsTo   Transaction[] @relation("ToBase")
+}
+
+model Asset {
+  id           Int           @id @default(autoincrement())
+  name         String
+  type         String        // 'VEHICLE', 'WEAPON', 'AMMUNITION'
+  description  String?
+  transactions Transaction[]
+}
+
+model Transaction {
+  id           Int      @id @default(autoincrement())
+  assetId      Int
+  asset        Asset    @relation(fields: [assetId], references: [id])
+  
+  fromBaseId   Int?
+  fromBase     Base?    @relation("FromBase", fields: [fromBaseId], references: [id])
+  
+  toBaseId     Int?
+  toBase       Base?    @relation("ToBase", fields: [toBaseId], references: [id])
+  
+  type         String   // 'PURCHASE', 'TRANSFER', 'ASSIGN', 'EXPEND'
+  quantity     Int
+  reference    String?  // Could be personnel name or invoice number
+  date         DateTime @default(now())
+  
+  userId       Int
+  user         User     @relation(fields: [userId], references: [id])
+}

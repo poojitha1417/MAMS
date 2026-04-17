@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #FACC15;
+  --color-slate-800: #1E293B;
+  --color-slate-900: #0F172A;
+  --color-success: #22C55E;
+  --color-error: #EF4444;
+}
+
+@layer base {
+  body {
+    @apply bg-slate-900 text-slate-100 min-h-screen font-['Outfit'];
+  }
+}
+
+@layer components {
+  .tactical-card {
+    @apply bg-[#1E293B] border border-slate-700 rounded-lg p-6 shadow-xl;
+  }
+  
+  .tactical-input {
+    @apply bg-[#0F172A] border border-slate-700 text-slate-100 rounded-md px-4 py-2 focus:border-[#60A5FA] focus:ring-1 focus:ring-[#60A5FA] outline-none transition-all;
+  }
+  
+  .tactical-btn {
+    @apply px-4 py-2 rounded-md font-semibold transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  
+  .tactical-btn-primary {
+    @apply bg-[#60A5FA] text-slate-900 hover:bg-blue-400 shadow-lg shadow-blue-500/20;
+  }
+  
+  .tactical-btn-secondary {
+    @apply border border-slate-700 bg-[#1E293B] text-slate-100 hover:bg-slate-700;
+  }
+
+  .tactical-header-1 {
+    @apply text-3xl font-bold tracking-tight text-[#60A5FA] mb-6;
+  }
+
+  .tactical-header-2 {
+    @apply text-xl font-semibold text-slate-100 mb-4;
+  }
+
+  .tactical-label {
+    @apply block text-sm font-medium text-slate-400 mb-1 uppercase tracking-wider;
+  }
+
+  .tactical-table-header {
+    @apply text-slate-400 font-bold uppercase text-xs tracking-wider border-b border-slate-700 pb-3 text-left px-4;
+  }
+
+  .tactical-table-cell {
+    @apply py-4 px-4 border-b border-slate-700/50 text-sm;
+  }
+
+  .tactical-badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold;
+  }
+}
+
+
+
+/* Custom chart tooltips */
+.recharts-default-tooltip {
+  @apply bg-[#1E293B] border border-slate-700 !rounded-lg !shadow-2xl !p-3 !text-slate-100 !font-['Outfit'];
+}
+
+.recharts-tooltip-label {
+  @apply !text-[#FACC15] !font-bold !mb-1;
+}
