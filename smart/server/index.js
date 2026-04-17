@@ -239,6 +239,11 @@ app.get('/api/inventory/movements', authMiddleware, async (req, res) => {
     res.json(movements);
 });
 
+// 🚀 Health Check / Welcome Route
+app.get('/health', (req, res) => {
+  res.send("Welcome to MAMS Backend Server 🚀");
+});
+
 // Wildcard route to serve React's index.html for any non-API route
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist/index.html'));
