@@ -1,0 +1,9 @@
+{
+  "name": "mams-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "npm install --prefix smart/server && npm install --prefix smart/client && npm run build --prefix smart/client && npx prisma generate --schema smart/server/prisma/schema.prisma && npx prisma db push --schema smart/server/prisma/schema.prisma && node smart/server/seed.js",
+    "start": "node smart/server/index.js"
+  }
+}

@@ -8,7 +8,7 @@ import Personnel from './components/Personnel';
 import axios from 'axios';
 import './index.css';
 
-axios.defaults.baseURL = 'http://localhost:5000/api';
+axios.defaults.baseURL = '/api';
 
 function App() {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));

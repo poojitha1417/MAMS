@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -11,6 +12,9 @@ app.use(express.json());
 
 const prisma = new PrismaClient();
 const JWT_SECRET = process.env.JWT_SECRET || 'secret-key';
+
+// STATIC FRONTEND SERVING
+app.use(express.static(path.join(__dirname, '../client/dist')));
 
 // AUTHENTICATION
 app.post('/api/auth/login', async (req, res) => {
@@ -233,7 +237,12 @@ app.get('/api/inventory/movements', authMiddleware, async (req, res) => {
         orderBy: { date: 'desc'}
     })
     res.json(movements);
-})
+});
+
+// Wildcard route to serve React's index.html for any non-API route
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
