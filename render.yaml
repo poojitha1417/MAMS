@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: mams-app
+    runtime: node
+    plan: free
+    buildCommand: npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 18.16.0
+      - key: PORT
+        value: 5000
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        placeholder: "Paste your PostgreSQL connection string here (e.g., from Render's DB service)"
+    disk:
+      name: sqlite-storage
+      mountPath: /data
+      sizeGB: 1
