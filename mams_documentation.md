@@ -78,15 +78,15 @@ MAMS employs a **Transaction Ledger** approach:
 - NPM or Yarn
 
 ### Backend Setup:
-1. Navigate to `server` directory.
-2. Run `npm install`.
+1. Ensure you are in the project root directory.
+2. Run `npm install` to install backend dependencies.
 3. Configure `.env` with `JWT_SECRET` and `DATABASE_URL`.
 4. Run `npx prisma db push` to initialize the database.
 5. Run `node seed.js` to populate roles and assets.
-6. Start with `npm run dev`.
+6. Start the server with `npm run dev`.
 
 ### Frontend Setup:
-1. Navigate to `client` directory.
+1. Navigate to `smart/client` directory.
 2. Run `npm install`.
 3. Run `npm run dev`.
 4. Access via `http://localhost:5173`.

@@ -4,7 +4,8 @@
   "description": "Unified Military Asset Management System for deployment",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "npx prisma migrate deploy && node server.js",
+    "dev": "concurrently \"nodemon server.js\" \"npm run dev --prefix smart/client\"",
     "build": "npm install --prefix smart/client && npm run build --prefix smart/client && npx prisma generate",
     "postinstall": "npx prisma generate"
   },
@@ -19,6 +20,7 @@
     "jsonwebtoken": "^9.0.3"
   },
   "devDependencies": {
+    "concurrently": "^9.2.1",
     "nodemon": "^3.1.14",
     "prisma": "5.22.0"
   }

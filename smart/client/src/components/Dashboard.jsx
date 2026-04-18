@@ -32,7 +32,7 @@ export default function Dashboard({ user }) {
     }
   };
 
-  const totals = data.reduce((acc, curr) => {
+  const totals = (Array.isArray(data) ? data : []).reduce((acc, curr) => {
     acc.closing += curr.closingBalance;
     acc.net += curr.netMovement;
     acc.expended += curr.expended;
@@ -57,8 +57,8 @@ export default function Dashboard({ user }) {
               onChange={e => setFilterBase(e.target.value)}
             >
               <option value="">ALL GLOBAL BASES</option>
-              {bases.map(b => (
-                <option key={b.id} value={b.id}>{b.name.toUpperCase()}</option>
+              {Array.isArray(bases) && bases.map(b => (
+                <option key={b.id} value={b.id}>{b.name?.toUpperCase()}</option>
               ))}
             </select>
           </div>
@@ -150,7 +150,7 @@ export default function Dashboard({ user }) {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800">
-              {data.map((row, i) => (
+              {Array.isArray(data) && data.map((row, i) => (
                 <tr key={i} className="hover:bg-slate-800/30 transition-colors group">
                   <td className="tactical-table-cell px-8 font-bold text-slate-300 uppercase tracking-tight">{row.base}</td>
                   <td className="tactical-table-cell">
@@ -213,7 +213,7 @@ export default function Dashboard({ user }) {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-800">
-                  {data.map((row, i) => (
+                  {Array.isArray(data) && data.map((row, i) => (
                     <tr key={i} className="hover:bg-slate-800/40 transition-colors">
                       <td className="tactical-table-cell px-8 text-white font-bold">{row.assetName} <span className="text-[10px] text-slate-500 uppercase ml-2">@{row.base}</span></td>
                       <td className="tactical-table-cell text-center font-mono text-[#22C55E]">+{row.purchases}</td>

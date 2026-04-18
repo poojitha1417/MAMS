@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
@@ -245,7 +246,8 @@ app.get('/health', (req, res) => {
 });
 
 // Wildcard route to serve React's index.html for any non-API route
-app.get('*', (req, res) => {
+// Catch-all to serve React's index.html for any non-API route
+app.use((req, res) => {
   res.sendFile(path.join(__dirname, 'smart/client/dist/index.html'));
 });
 

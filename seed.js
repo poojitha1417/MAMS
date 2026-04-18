@@ -41,18 +41,78 @@ async function main() {
   const logPassword = await bcrypt.hash('log123', 10);
 
   // Admin User
-  await prisma.user.create({
+  const admin = await prisma.user.create({
     data: { username: 'admin', passwordHash: adminPassword, role: 'ADMIN' }
   });
 
   // Base Commander for Base Alpha
-  await prisma.user.create({
+  const commander = await prisma.user.create({
     data: { username: 'commander_alpha', passwordHash: cdrPassword, role: 'COMMANDER', baseId: baseAlpha.id }
   });
 
   // Logistics Officer for Base Bravo
-  await prisma.user.create({
+  const logistics = await prisma.user.create({
     data: { username: 'logistics_bravo', passwordHash: logPassword, role: 'LOGISTICS', baseId: baseBravo.id }
+  });
+
+  console.log('Seeding Transactions...');
+  // Initial Purchase for Alpha
+  await prisma.transaction.create({
+    data: {
+      assetId: tank.id,
+      toBaseId: baseAlpha.id,
+      type: 'PURCHASE',
+      quantity: 10,
+      reference: 'PO-001',
+      userId: admin.id
+    }
+  });
+
+  // Transfer Alpha -> Bravo
+  await prisma.transaction.create({
+    data: {
+      assetId: rifle.id,
+      toBaseId: baseAlpha.id,
+      type: 'PURCHASE',
+      quantity: 50,
+      reference: 'PO-002',
+      userId: admin.id
+    }
+  });
+
+  await prisma.transaction.create({
+    data: {
+      assetId: rifle.id,
+      fromBaseId: baseAlpha.id,
+      toBaseId: baseBravo.id,
+      type: 'TRANSFER',
+      quantity: 20,
+      reference: 'TR-101',
+      userId: commander.id
+    }
+  });
+
+  // Expenditure at Alpha
+  await prisma.transaction.create({
+    data: {
+      assetId: ammo.id,
+      toBaseId: baseAlpha.id,
+      type: 'PURCHASE',
+      quantity: 100,
+      reference: 'PO-003',
+      userId: admin.id
+    }
+  });
+
+  await prisma.transaction.create({
+    data: {
+      assetId: ammo.id,
+      fromBaseId: baseAlpha.id,
+      type: 'EXPEND',
+      quantity: 30,
+      reference: 'EX-501',
+      userId: commander.id
+    }
   });
 
   console.log('Seeding Complete.');

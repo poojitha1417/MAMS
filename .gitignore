@@ -7,8 +7,10 @@ yarn-error.log*
 .env
 
 # Database
-smart/server/prisma/dev.db
-smart/server/prisma/dev.db-journal
+prisma/*.db
+prisma/*.db-journal
+dev.db
+dev.db-journal
 
 # IDEs
 .vscode/
@@ -21,6 +23,7 @@ dist/
 build/
 .next/
 out/
+smart/client/dist/
 
 # OS
 .DS_Store
